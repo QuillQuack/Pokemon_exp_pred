@@ -15,5 +15,7 @@ speed = st.number_input("Speed", 1, 255)
 
 if st.button("Predict"):
     X = np.array([[hp, attack, defend, spe, speed]])
-    pred = model.predict(X)[0]
+    pred_log = model.predict(X)[0]
+    pred = np.expm1(pred_log)
+    # pred = max(0, pred)
     st.success(f"Estimated exp: {pred:.2f}")

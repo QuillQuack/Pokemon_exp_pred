@@ -14,9 +14,13 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_
 
 #Multiple Regression
 model = LinearRegression()
-model.fit(X_train, y_train)
+y_train_log = np.log1p(y_train)
+model.fit(X_train, y_train_log)
 
-y_pred = model.predict(X_test)
+y_pred_log = model.predict(X_test)
+
+#Domain Constrain
+y_pred = np.expm1(y_pred_log)
 MSE = mean_squared_error(y_test, y_pred)
 RMSE = np.sqrt(MSE)
 R2 = r2_score(y_test, y_pred)
